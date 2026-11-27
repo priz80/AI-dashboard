@@ -3,14 +3,18 @@ import type { Run } from "../types/run";
 type RunsTableProps = {
   runs: Run[];
   isLoading: boolean;
+  loadError: string | null;
   onOpenRun: (run: Run) => void;
+  onRetry: () => void;
   onResetAndReload: () => void;
 };
 
 export const RunsTable = ({
   runs,
   isLoading,
+  loadError,
   onOpenRun,
+  onRetry,
   onResetAndReload,
 }: RunsTableProps) => (
   <>
@@ -51,6 +55,18 @@ export const RunsTable = ({
                 </td>
               </tr>
             ))
+          ) : loadError ? (
+            <tr className="error-row">
+              <td colSpan={4}>
+                <div className="error-state" role="alert">
+                  <strong>Не удалось загрузить данные</strong>
+                  <span>{loadError}</span>
+                  <button type="button" onClick={onRetry}>
+                    Повторить
+                  </button>
+                </div>
+              </td>
+            </tr>
           ) : runs.length === 0 ? (
             <tr className="empty-row">
               <td colSpan={4}>

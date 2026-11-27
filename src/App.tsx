@@ -9,6 +9,7 @@ import type { Run, RunStatusFilter } from "./types/run";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [runs, setRuns] = useState<Run[]>([]);
   const [selectedRun, setSelectedRun] = useState<Run | null>(null);
   const [statusFilter, setStatusFilter] = useState<RunStatusFilter>("all");
@@ -27,37 +28,7 @@ function App() {
     });
   }, [runs, statusFilter, normalizedQuery]);
 
-  useEffect(() => {
-    const loadRuns = async () => {
-      try {
-        const [response] = await Promise.all([
-          fetch("http://localhost:3001/runs"),
-          new Promise((resolve) => window.setTimeout(resolve, 700)),
-        ]);
-
-        if (!response.ok) {
-          throw new Error(`Ошибка загрузки: ${response.status}`);
-        }
-
-        const data: Run[] = await response.json();
-        setRuns(data);
-      } catch (error) {
-        console.error("Не удалось загрузить запуски:", error);
-        setRuns([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    void loadRuns();
-  }, []);
-
-  const resetFilterAndReload = async () => {
-    setStatusFilter("all");
-    setSearchQuery("");
-    setSelectedRun(null);
-    setIsLoading(true);
-
+  const loadRuns = async () => {
     try {
       const [response] = await Promise.all([
         fetch("http://localhost:3001/runs"),
@@ -71,11 +42,59 @@ function App() {
       const data: Run[] = await response.json();
       setRuns(data);
     } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Не удалось загрузить запуски";
       console.error("Не удалось загрузить запуски:", error);
       setRuns([]);
+      setLoadError(message);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    const loadInitialRuns = async () => {
+      try {
+        const [response] = await Promise.all([
+          fetch("http://localhost:3001/runs"),
+          new Promise((resolve) => window.setTimeout(resolve, 700)),
+        ]);
+
+        if (!response.ok) {
+          throw new Error(`Ошибка загрузки: ${response.status}`);
+        }
+
+        const data: Run[] = await response.json();
+        setRuns(data);
+      } catch (error) {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Не удалось загрузить запуски";
+        console.error("Не удалось загрузить запуски:", error);
+        setRuns([]);
+        setLoadError(message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadInitialRuns();
+  }, []);
+
+  const retryLoad = () => {
+    setIsLoading(true);
+    setLoadError(null);
+    void loadRuns();
+  };
+
+  const resetFilterAndReload = () => {
+    setStatusFilter("all");
+    setSearchQuery("");
+    setSelectedRun(null);
+    setIsLoading(true);
+    setLoadError(null);
+    void loadRuns();
   };
 
   return (
@@ -89,7 +108,9 @@ function App() {
           <RunsTable
             runs={filteredRuns}
             isLoading={isLoading}
+            loadError={loadError}
             onOpenRun={setSelectedRun}
+            onRetry={retryLoad}
             onResetAndReload={resetFilterAndReload}
           />
           <RunsToolbar

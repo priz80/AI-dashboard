@@ -11,7 +11,7 @@ body {
   min-width: 360px;
   min-height: 100vh;
   background: #f5f7f6;
-  color: #081A33;
+  color: #081a33;
 }
 
 button,
@@ -46,7 +46,7 @@ button {
   align-items: center;
   gap: 10px;
   margin: 0 0 42px 4px;
-  color: #081A33;
+  color: #081a33;
   font-size: 13px;
   font-weight: 750;
   letter-spacing: 0.6px;
@@ -60,7 +60,7 @@ button {
   place-items: center;
   border-radius: 8px;
   background: #dff3ea;
-  color: #081A33;
+  color: #081a33;
   font-weight: 800;
 }
 
@@ -86,7 +86,9 @@ button {
   border-radius: 6px;
   color: #67736f;
   text-decoration: none;
-  transition: background 140ms ease, color 140ms ease;
+  transition:
+    background 140ms ease,
+    color 140ms ease;
 }
 
 .nav-item:hover {
@@ -96,7 +98,7 @@ button {
 
 .nav-item.active {
   background: #eaf5ef;
-  color: #081A33;
+  color: #081a33;
   font-weight: 650;
 }
 
@@ -198,7 +200,7 @@ button {
 
 .project-header h1 {
   margin: 0;
-  color: #081A33;
+  color: #081a33;
   font-size: 28px;
   font-weight: 650;
   letter-spacing: 0;
@@ -227,7 +229,7 @@ button {
 }
 
 .primary-button:hover {
-  background: #081A33;
+  background: #081a33;
 }
 
 .primary-button span {
@@ -348,7 +350,7 @@ td {
 
 .status-running {
   background: #dcf5e8;
-  color: #081A33;
+  color: #081a33;
 }
 
 .status-running .status-dot {
@@ -425,7 +427,7 @@ td {
 }
 
 .toolbar-tab.selected {
-  color: #081A33;
+  color: #081a33;
   font-weight: 650;
 }
 
@@ -476,7 +478,9 @@ td {
   gap: 8px;
   border: 1px solid transparent;
   border-radius: 6px;
-  transition: background-color 140ms ease, color 140ms ease;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
 }
 
 .filter-control select {
@@ -615,7 +619,7 @@ td {
 
 .run-modal-header h2 {
   margin: 0;
-  color: #081A33;
+  color: #081a33;
   font-size: 20px;
 }
 
@@ -668,12 +672,7 @@ td {
   display: block;
   height: 12px;
   border-radius: 4px;
-  background: linear-gradient(
-    90deg,
-    #edf1ee 25%,
-    #f7f9f7 50%,
-    #edf1ee 75%
-  );
+  background: linear-gradient(90deg, #edf1ee 25%, #f7f9f7 50%, #edf1ee 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.3s ease-in-out infinite;
 }
@@ -697,7 +696,6 @@ td {
   height: 28px;
   margin-left: auto;
 }
-
 
 .search-control {
   gap: 9px;
@@ -730,38 +728,59 @@ td {
   cursor: pointer;
 }
 
-
-.empty-row td {
+.empty-row td,
+.error-row td {
   height: 120px;
+  text-align: center;
+}
+
+.empty-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.empty-state {
   color: #929d98;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.8px;
-  text-align: center;
 }
 
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+.error-state {
+  color: #65716c;
+  font-size: 12px;
 }
 
-.empty-state button {
+.error-state strong {
+  color: #b42318;
+  font-size: 14px;
+}
+
+.error-state span {
+  color: #929d98;
+}
+
+.empty-state button,
+.error-state button {
   min-height: 36px;
   padding: 0 14px;
   border: 1px solid #dfe6e2;
   border-radius: 6px;
-  background: #fff;
-  color: #197653;
+  background: #081a33;
+  color: #fff;
   font-size: 12px;
   font-weight: 650;
 }
 
-.empty-state button:hover {
+/* .empty-state button:hover,
+.error-state button:hover {
   background: #edf5f1;
   border-color: #c7dacf;
-}
+} */
 
 @media (max-width: 480px) {
   .search-control {
@@ -790,7 +809,9 @@ td {
 }
 
 @keyframes pulse {
-  50% { box-shadow: 0 0 0 4px #d8f0e3; }
+  50% {
+    box-shadow: 0 0 0 4px #d8f0e3;
+  }
 }
 
 @media (max-width: 1080px) {
