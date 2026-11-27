@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { Run } from "../types/run";
 
 type RunDetailsModalProps = {
@@ -6,16 +7,88 @@ type RunDetailsModalProps = {
 };
 
 export const RunDetailsModal = ({ run, onClose }: RunDetailsModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const focusableSelector =
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+  // Escape to close
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  // Focus trap
+  useEffect(() => {
+    const modal = modalRef.current;
+    if (!modal) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+
+      const focusable = Array.from(
+        modal.querySelectorAll(focusableSelector)
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0] as HTMLElement;
+      const last = focusable[focusable.length - 1] as HTMLElement;
+
+      if (event.shiftKey) {
+        if (document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Focus first focusable element on open
+  useEffect(() => {
+    const modal = modalRef.current;
+    if (!modal) return;
+
+    const firstFocusable = modal.querySelector(focusableSelector);
+    if (firstFocusable) {
+      (firstFocusable as HTMLElement).focus();
+    }
+  }, [run]);
+
+  // Prevent body scroll
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   if (!run) return null;
 
   return (
     <div
       className="modal-backdrop"
-      onMouseDown={(event) => {
+      onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") onClose();
+      }}
+      tabIndex={-1}
+      role="presentation"
     >
       <section
+        ref={modalRef}
         className="run-modal"
         role="dialog"
         aria-modal="true"

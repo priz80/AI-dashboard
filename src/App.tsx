@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ProjectHeader } from "./components/ProjectHeader";
 import { RunDetailsModal } from "./components/RunDetailsModal";
 import { RunsTable } from "./components/RunsTable";
@@ -15,6 +15,8 @@ function App() {
   const [statusFilter, setStatusFilter] = useState<RunStatusFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   const filteredRuns = useMemo(() => {
     return runs.filter((run) => {
@@ -58,6 +60,18 @@ function App() {
     void loadInitialRuns();
   }, []);
 
+  const openRun = (run: Run) => {
+    previousFocusRef.current = document.activeElement as HTMLElement;
+    setSelectedRun(run);
+  };
+
+  const closeRun = () => {
+    if (previousFocusRef.current) {
+      previousFocusRef.current.focus();
+    }
+    setSelectedRun(null);
+  };
+
   const retryLoad = () => {
     setIsLoading(true);
     setLoadError(null);
@@ -83,7 +97,7 @@ function App() {
             runs={filteredRuns}
             isLoading={isLoading}
             loadError={loadError}
-            onOpenRun={setSelectedRun}
+            onOpenRun={openRun}
             onRetry={retryLoad}
             onResetAndReload={resetFilterAndReload}
           />
@@ -97,7 +111,7 @@ function App() {
 
         <RunDetailsModal
           run={selectedRun}
-          onClose={() => setSelectedRun(null)}
+          onClose={closeRun}
         />
 
         <footer className="main-footer">
