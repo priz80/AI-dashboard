@@ -6,10 +6,17 @@
   text-align: left;
 }
 
+html {
+  height: 100%;
+  overflow-y: auto;
+}
+
 body {
   min-width: 360px;
+  margin: 0;
   background: #f5f7f6;
   color: #081a33;
+  overflow-y: auto;
 }
 
 button,
@@ -37,7 +44,6 @@ select:focus-visible {
   font-family: "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 1.45;
-  overflow-y: auto;
 }
 
 .sidebar {
