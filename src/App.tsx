@@ -28,35 +28,11 @@ function App() {
     });
   }, [runs, statusFilter, normalizedQuery]);
 
-  const loadRuns = async () => {
-    try {
-      const [response] = await Promise.all([
-        fetch("http://localhost:3001/runs"),
-        new Promise((resolve) => window.setTimeout(resolve, 700)),
-      ]);
-
-      if (!response.ok) {
-        throw new Error(`Ошибка загрузки: ${response.status}`);
-      }
-
-      const data: Run[] = await response.json();
-      setRuns(data);
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Не удалось загрузить запуски";
-      console.error("Не удалось загрузить запуски:", error);
-      setRuns([]);
-      setLoadError(message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     const loadInitialRuns = async () => {
       try {
         const [response] = await Promise.all([
-          fetch("http://localhost:3001/runs"),
+          fetch("/api/runs"),
           new Promise((resolve) => window.setTimeout(resolve, 700)),
         ]);
 
@@ -85,16 +61,14 @@ function App() {
   const retryLoad = () => {
     setIsLoading(true);
     setLoadError(null);
-    void loadRuns();
+    window.location.reload();
   };
 
   const resetFilterAndReload = () => {
     setStatusFilter("all");
     setSearchQuery("");
     setSelectedRun(null);
-    setIsLoading(true);
-    setLoadError(null);
-    void loadRuns();
+    window.location.reload();
   };
 
   return (
