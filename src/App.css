@@ -1,10 +1,11 @@
 #root {
   width: 100%;
   max-width: none;
-  min-height: 100svh;
+  min-height: 100vh;
   margin: 0;
   border: 0;
   text-align: left;
+  overflow-y: auto;
 }
 
 body {
@@ -35,7 +36,7 @@ select:focus-visible {
 .dashboard {
   display: grid;
   grid-template-columns: 20% minmax(0, 1fr);
-  min-height: 100svh;
+  min-height: 100vh;
   font-family: "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 1.45;
