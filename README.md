@@ -72,11 +72,10 @@ RUNFORGE — это веб-приложение, позволяющее разр
 - `aria-modal` и `role="dialog"` для модального окна
 - `prefers-reduced-motion` — отключение анимации скелетона
 
-### 8. Mock API
+### 8. Mock API (локально) и Serverless API (продакшен)
 
-- `json-server` на порту **3001**
-- Данные в `db.json` (6 записей с разными статусами)
-- Загрузка через `fetch("http://localhost:3001/runs")`
+- **Локально:** `json-server` на порту **3001**, данные из `db.json`, загрузка через `fetch("http://localhost:3001/runs")`
+- **Продакшен:** Serverless-функция `api/runs.ts` на Vercel, данные захардкожены, загрузка через `fetch("/api/runs")`
 
 ---
 
@@ -182,6 +181,31 @@ npm run test:run
 
 ---
 
+## 🌐 Деплой на Vercel
+
+Приложение размещено на Vercel и доступно по адресу:
+
+👉 **[ai-dashboard-two-theta.vercel.app](https://ai-dashboard-two-theta.vercel.app/)**
+
+### Как устроен деплой
+
+| Файл | Назначение |
+|---|---|
+| `api/runs.ts` | Serverless-функция, отдаёт данные запусков при запросе `GET /api/runs` |
+| `vercel.json` | Роутинг: `/api/*` → serverless-функция, остальное → `index.html` |
+| `src/App.tsx` | `fetch("/api/runs")` — относительный путь, работает и локально, и на продакшене |
+
+### Процесс деплоя
+
+1. Запушить изменения в GitHub-репозиторий
+2. Vercel автоматически обнаруживает репозиторий и запускает билд
+3. Serverless-функция `api/runs.ts` разворачивается как отдельный endpoint
+4. Статические файлы `dist/` развёртываются как SPA
+
+> **Важно:** Данные захардкожены в `api/runs.ts`, так как `import` JSON не поддерживается в Vercel serverless-функциях. Для продакшена с реальным API замените функцию на вызов внешнего REST API.
+
+---
+
 ## 📁 Структура проекта
 
 ```
@@ -202,10 +226,13 @@ AI-dashboard/
 │   ├── App.css                      # Стили основного интерфейса
 │   ├── main.tsx                     # Точка входа
 │   └── index.css                    # Глобальные стили, CSS-переменные
+├── api/
+│   └── runs.ts                  # Serverless API (Vercel)
 ├── public/
 │   └── favicon.svg
 ├── db.json                          # Mock-данные (json-server)
-├── vite.config.ts                   # Конфигурация Vite
+├── vercel.json                  # Роутинг Vercel
+├── vite.config.ts               # Конфигурация Vite
 ├── vitest.config.ts                 # Конфигурация Vitest
 ├── tsconfig.app.json                # TypeScript (app)
 ├── tsconfig.node.json               # TypeScript (node)
@@ -229,7 +256,11 @@ graph TB
         Modal["RunDetailsModal.tsx"]
     end
 
-    subgraph "Mock Backend"
+    subgraph "Vercel Serverless"
+        API["api/runs.ts<br/>GET /api/runs"]
+    end
+
+    subgraph "Mock Backend (локально)"
         JS["json-server<br/>port 3001"]
         DB["db.json"]
     end
@@ -240,7 +271,8 @@ graph TB
     App --> Toolbar
     App --> Modal
 
-    App -.->|fetch GET /runs| JS
+    App -.->|fetch /api/runs| API
+    App -.->|fetch localhost:3001| JS
     JS --> DB
 ```
 
