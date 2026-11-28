@@ -32,7 +32,7 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid #20a36b;
+  outline: 2px solid #081a33;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -368,7 +368,7 @@ td {
 }
 
 .status-running .status-dot {
-  background: #20a36b;
+  background: #081a33;
 }
 
 .status-succeeded {
@@ -481,8 +481,8 @@ td {
 }
 
 .filter-control:focus-within {
-    border-color: #70a88f;
-    box-shadow: 0 0 0 2px #20a36b1f;
+    border-color: #081a33;
+    box-shadow: 0 0 0 2px #081a331f;
 }
 
 .filter-control select {
@@ -553,7 +553,7 @@ td {
 }
 
 .filter-dot-running {
-  background: #20a36b;
+  background: #081a33;
 }
 
 .filter-dot-succeeded {
@@ -728,7 +728,7 @@ td {
 }
 
 .search-control:focus-within {
-  border-color: #70a88f;
+  border-color: #081a33;
   box-shadow: 0 0 0 2px rgb(32 163 107 / 12%);
 }
 
