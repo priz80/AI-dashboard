@@ -413,7 +413,7 @@ td {
 .runs-toolbar {
   display: flex;
   min-height: 53px;
-  align-items: stretch;
+  /* align-items: stretch; */
   justify-content: space-between;
   padding: 0 18px;
   border-top: 1px solid #e9eeeb;
@@ -476,6 +476,11 @@ td {
 
 .filter-control {
   cursor: pointer;
+}
+
+.filter-control:focus-within {
+    border-color: #70a88f;
+    box-shadow: 0 0 0 2px #20a36b1f;
 }
 
 .filter-control select {
