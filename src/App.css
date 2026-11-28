@@ -413,7 +413,7 @@ td {
 .runs-toolbar {
   display: flex;
   min-height: 53px;
-  /* align-items: stretch; */
+  align-items: stretch;
   justify-content: space-between;
   padding: 0 18px;
   border-top: 1px solid #e9eeeb;
@@ -421,9 +421,11 @@ td {
 
 .toolbar-tabs,
 .toolbar-actions {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 7px;
+  justify-content: space-between;
 }
 
 .toolbar-tab,
@@ -511,6 +513,7 @@ td {
   font: inherit;
   cursor: pointer;
 }
+
 
 .filter-all {
   background: #f1f4f2;
@@ -718,7 +721,7 @@ td {
 
 .search-control {
   gap: 9px;
-  min-width: 220px;
+  min-width: 418px;
   border: 1px solid #e4eae6;
   border-radius: 6px;
   background: #fff;
