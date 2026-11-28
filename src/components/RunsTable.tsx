@@ -59,10 +59,10 @@ export const RunsTable = ({
             <tr className="error-row">
               <td colSpan={4}>
                 <div className="error-state" role="alert">
-                  <strong>Не удалось загрузить данные</strong>
+                  <strong>Failed to load data</strong>
                   <span>{loadError}</span>
                   <button type="button" onClick={onRetry}>
-                    Повторить
+                    Repeat
                   </button>
                 </div>
               </td>

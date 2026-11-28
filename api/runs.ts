@@ -8,7 +8,7 @@ const runs = [
     agent: "Claude Code",
     branch: "feature/auth-refactor",
     status: "RUNNING",
-    statusLabel: "Выполняется",
+    statusLabel: "RUNNING",
     startedAt: "2026-11-27T10:42:00Z",
   },
   {
@@ -18,7 +18,7 @@ const runs = [
     agent: "Codex",
     branch: "fix/checkout-tests",
     status: "SUCCEEDED",
-    statusLabel: "Успешно завершён",
+    statusLabel: "SUCCEEDED",
     startedAt: "2026-11-27T09:18:00Z",
   },
   {
@@ -28,7 +28,7 @@ const runs = [
     agent: "Claude Code",
     branch: "chore/dependencies",
     status: "QUEUED",
-    statusLabel: "Ожидает запуска",
+    statusLabel: "QUEUED",
     startedAt: "2026-11-27T11:05:00Z",
   },
   {
@@ -38,7 +38,7 @@ const runs = [
     agent: "Codex",
     branch: "feature/password-reset",
     status: "FAILED",
-    statusLabel: "Завершён с ошибкой",
+    statusLabel: "FAILED",
     startedAt: "2026-11-27T08:30:00Z",
   },
   {
@@ -48,7 +48,7 @@ const runs = [
     agent: "Claude Code",
     branch: "feature/api-errors",
     status: "RUNNING",
-    statusLabel: "Выполняется",
+    statusLabel: "RUNNING",
     startedAt: "2026-11-27T11:12:00Z",
   },
   {
@@ -58,7 +58,7 @@ const runs = [
     agent: "Codex",
     branch: "feature/payment-methods",
     status: "QUEUED",
-    statusLabel: "Ожидает запуска",
+    statusLabel: "QUEUED",
     startedAt: "2026-11-27T11:20:00Z",
   },
 ];

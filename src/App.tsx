@@ -46,10 +46,8 @@ function App() {
         setRuns(data);
       } catch (error) {
         const message =
-          error instanceof Error
-            ? error.message
-            : "Не удалось загрузить запуски";
-        console.error("Не удалось загрузить запуски:", error);
+          error instanceof Error ? error.message : "Failed to load launches";
+        console.error("Failed to load launches:", error);
         setRuns([]);
         setLoadError(message);
       } finally {
