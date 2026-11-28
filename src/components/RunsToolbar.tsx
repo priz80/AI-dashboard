@@ -14,23 +14,21 @@ export const RunsToolbar = ({
   onStatusChange,
 }: RunsToolbarProps) => (
   <div className="runs-toolbar">
-    <div className="toolbar-tabs">
+    {/* <div className="toolbar-tabs">
       <button className="toolbar-tab selected" type="button">
-        Список запусков
+        List of runs
       </button>
-    </div>
+    </div> */}
     <div className="toolbar-actions">
       <label className="tool-button search-control">
         <span className="search-icon" aria-hidden="true" />
-        <span className="sr-only">
-          Поиск по названию запуска или репозиторию
-        </span>
+        <span className="sr-only">Search by runs name or repository</span>
         <input
           type="search"
           value={searchQuery}
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Запуск или репозиторий"
-          aria-label="Поиск по названию запуска или репозиторию"
+          placeholder="Runs or repository"
+          aria-label="Search by runs name or repository"
         />
       </label>
       <label className={`tool-button filter-control filter-${statusFilter}`}>
@@ -46,7 +44,7 @@ export const RunsToolbar = ({
           }
           aria-label="Фильтр по статусу"
         >
-          <option value="all">Все статусы</option>
+          <option value="all">All statuses</option>
           <option value="queued">Queued</option>
           <option value="running">Running</option>
           <option value="succeeded">Succeeded</option>
