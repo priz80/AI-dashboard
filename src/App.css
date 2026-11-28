@@ -364,11 +364,11 @@ td {
 
 .status-running {
   background: #dcf5e8;
-  color: #081a33;
+  color: #20a36b;
 }
 
 .status-running .status-dot {
-  background: #081a33;
+  background: #20a36b;
 }
 
 .status-succeeded {
