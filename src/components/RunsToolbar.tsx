@@ -36,7 +36,7 @@ export const RunsToolbar = ({
           className={`filter-status-dot filter-dot-${statusFilter}`}
           aria-hidden="true"
         />
-        <span className="sr-only">Фильтр по статусу</span>
+        <span className="sr-only">Filter by status</span>
         <select
           value={statusFilter}
           onChange={(event) =>
@@ -49,7 +49,7 @@ export const RunsToolbar = ({
           <option value="running">Running</option>
           <option value="succeeded">Succeeded</option>
           <option value="failed">Failed</option>
-          <option value="dev">Dev mode</option>
+          <option value="dev">In dev mode</option>
         </select>
       </label>
     </div>
